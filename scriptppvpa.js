@@ -18,17 +18,61 @@ spans[2].style.transform = 'none';
 }
 });
 
-// Close menu when clicking a link
-const navLinks = document.querySelectorAll('.nav-menu a');
-navLinks.forEach(link => {
-link.addEventListener('click', () => {
-navMenu.classList.remove('active');
-const spans = navToggle.querySelectorAll('span');
-spans[0].style.transform = 'none';
-spans[1].style.opacity = '1';
-spans[2].style.transform = 'none';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const toggles = document.querySelectorAll('.toggle-submenu');
+
+  toggles.forEach(toggle => {
+    toggle.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation(); // ❗ detener propagación evita el cierre inmediato
+
+      const submenu = toggle.nextElementSibling;
+      const isOpen = submenu.classList.contains('show');
+
+      // Cerrar todos
+      document.querySelectorAll('.submenu').forEach(menu => {
+        menu.classList.remove('show');
+      });
+
+      // Abrir o cerrar el submenú actual
+      if (!isOpen) submenu.classList.add('show');
+    });
+  });
+
+  
+
+
+  // Cerrar al hacer clic afuera
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.submenu').forEach(menu => {
+      menu.classList.remove('show');
+    });
+  });
 });
+
+document.querySelectorAll('.toggle-submenu').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault(); // Evita que recargue la página si el href es "#"
+    const serviceItem = this.closest('.service');
+    serviceItem.classList.toggle('active');
+  });
 });
+
+document.querySelectorAll('.toggle-submenu').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault(); // Evita que recargue la página si el href es "#"
+    const serviceItem = this.closest('.user');
+    serviceItem.classList.toggle('active');
+  });
+});
+
+
+
+
+
+
+
 
 // Change header style on scroll
 window.addEventListener('scroll', () => {
